@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Notifications\EmailNotification;
 use App\Models\User;
+use Illuminate\Support\Facades\Notification;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,8 +21,13 @@ Route::get('/', function () {
 });
 
 Route::get('/send-notification', function () {
-	$user = User::find(1);
-    $user->notify(new EmailNotification());
+	$users = User::all();
+	foreach ($users as $key => $value) {
+		//$user->notify(new EmailNotification());	
+		Notification::send($value, new EmailNotification());
+	}
+	return redirect()->back();
+    
 });
 
 
