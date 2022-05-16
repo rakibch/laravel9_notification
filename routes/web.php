@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Notifications\EmailNotification;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/send-notification', function () {
+	$user = User::find(1);
+    $user->notify(new EmailNotification());
+});
+
 
 Auth::routes();
 //rakib new line
